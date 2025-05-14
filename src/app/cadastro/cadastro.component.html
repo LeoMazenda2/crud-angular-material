@@ -68,16 +68,17 @@
         </mat-card-content>
 
         <mat-card-actions>
+          @if(!Actualizando){
           <button type="submit" mat-flat-button color="primary">
             <mat-icon fontIcon="save"></mat-icon>
             Salvar
           </button>
-
-          <button type="button" mat-flat-button color="primary">
+          } @else {
+          <button type="submit" mat-flat-button color="primary">
             <mat-icon fontIcon="refresh"></mat-icon>
-            Cancelar
+            Actualizar
           </button>
-
+          }
           <button type="button" mat-flat-button color="accent" class="ml-5">
             <mat-icon fontIcon="backspace"></mat-icon>
             Limpar

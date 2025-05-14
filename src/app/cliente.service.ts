@@ -16,6 +16,16 @@ export class ClienteService {
     localStorage.setItem(ClienteService.REPO_CLIENTE, JSON.stringify(storage));
   }
 
+    actualiar(cliente: Cliente) {
+    const storage = this.obterStorage();
+    storage.forEach(c =>{
+      if(c.id === cliente.id){
+        Object.assign(c, cliente); // atualizando
+      }
+    })
+    localStorage.setItem(ClienteService.REPO_CLIENTE, JSON.stringify(storage));
+  }
+
   pesquisarClientes(nomeBusca: string) : Cliente[] {
 
     const clientes = this.obterStorage();
