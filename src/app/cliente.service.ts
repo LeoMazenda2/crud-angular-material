@@ -23,7 +23,14 @@ export class ClienteService {
       return clientes;
     }
 
-    return clientes.filter(cliente => cliente.nome?.indexOf(nomeBusca) !== -1);
+    return clientes.filter(cliente => cliente.nome?.indexOf(nomeBusca) !== -1);//O metodo filter() Retorna um novo array
+    
+  }
+
+  buscarPeloId(id: string) : Cliente | undefined{
+    const clientes = this.obterStorage();
+    return clientes.find(c => c.id === id); //O metodo finf() Retorna apema um elemento do array
+    
   }
 
   private obterStorage(): Cliente[] {
