@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Cliente } from './cliente';
 import { ClienteService } from '../cliente.service';
@@ -42,7 +42,7 @@ export class CadastroComponent implements OnInit {
   Actualizando: boolean = false;
   snack: MatSnackBar = inject(MatSnackBar);
   estados: Estado[] = [];
-  munivipios : Municipio[] = [];
+  municipios : Municipio[] = [];
 
   constructor(
     private serviceCliente: ClienteService,
@@ -72,6 +72,14 @@ export class CadastroComponent implements OnInit {
     //observible / subscrible
     this.brasilApiService.listarUFs().subscribe({
       next: listaEstados => this.estados = listaEstados, 
+      error: erro => console.log("Ocorreu um erro na sua requisição: ", erro)
+    })
+  }
+
+  carregarMunicipios(event: MatSelectChange){
+    const ufSelecionada = event.value;
+    this.brasilApiService.listarMunicipios(ufSelecionada).subscribe({
+      next: listaMunicipios => this.municipios = listaMunicipios, 
       error: erro => console.log("Ocorreu um erro na sua requisição: ", erro)
     })
   }
