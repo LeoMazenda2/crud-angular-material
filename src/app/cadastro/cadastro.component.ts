@@ -38,7 +38,7 @@ import { CommonModule } from '@angular/common';
 
 export class CadastroComponent implements OnInit {
 
-  Cliente: Cliente = Cliente.newCliente();
+  cliente: Cliente = Cliente.newCliente();
   Actualizando: boolean = false;
   snack: MatSnackBar = inject(MatSnackBar);
   estados: Estado[] = [];
@@ -47,7 +47,7 @@ export class CadastroComponent implements OnInit {
   constructor(
     private serviceCliente: ClienteService,
     private brasilApiService: BrasilapiService,
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private router: Router
   ) {}
 
@@ -60,18 +60,23 @@ export class CadastroComponent implements OnInit {
         let clienteEncontrado =  this.serviceCliente.buscarPeloId(id)
         if(clienteEncontrado){
           this.Actualizando = true;
-          this.Cliente = clienteEncontrado;
-        }      
+          this.cliente = clienteEncontrado;
+
+          if(this.cliente.uf) {
+            const event = {value: this.cliente.uf}
+            this.carregarMunicipios(event as MatSelectChange);
+          }
+        }
        }
-    }) 
-    
+    })
+
     this.carregarUFs();
   }
-  
+
   carregarUFs(){
     //observible / subscrible
     this.brasilApiService.listarUFs().subscribe({
-      next: listaEstados => this.estados = listaEstados, 
+      next: listaEstados => this.estados = listaEstados,
       error: erro => console.log("Ocorreu um erro na sua requisição: ", erro)
     })
   }
@@ -79,19 +84,19 @@ export class CadastroComponent implements OnInit {
   carregarMunicipios(event: MatSelectChange){
     const ufSelecionada = event.value;
     this.brasilApiService.listarMunicipios(ufSelecionada).subscribe({
-      next: listaMunicipios => this.municipios = listaMunicipios, 
+      next: listaMunicipios => this.municipios = listaMunicipios,
       error: erro => console.log("Ocorreu um erro na sua requisição: ", erro)
     })
   }
 
   salvar() {
     if(!this.Actualizando){
-      this.serviceCliente.salvar(this.Cliente);
-      this.Cliente = Cliente.newCliente();
+      this.serviceCliente.salvar(this.cliente);
+      this.cliente = Cliente.newCliente();
       this.mostrarMensagem("Salvo com sucesso");
     }
     else{
-      this.serviceCliente.actualiar(this.Cliente);
+      this.serviceCliente.actualiar(this.cliente);
       this.router.navigate(['/consulta']);
        this.mostrarMensagem("Actualixado com sucesso");
     }
@@ -100,5 +105,5 @@ export class CadastroComponent implements OnInit {
   mostrarMensagem(mensagem: string){
     this.snack.open(mensagem, "OK");
   }
-  
+
 }

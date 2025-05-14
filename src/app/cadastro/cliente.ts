@@ -1,3 +1,4 @@
+import { Municipio } from './../brasilapi.models';
 import { v4 as uuid } from 'uuid'
 
 export class Cliente {
@@ -6,7 +7,10 @@ export class Cliente {
     cpf?: string;
     dataNascimento?: string;
     email?: string;
-    deletando: boolean = false; 
+    deletando: boolean = false;
+    uf?: string;
+    municipio?: Municipio;
+
 
     static newCliente(){
         const cliente = new Cliente();

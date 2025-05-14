@@ -12,7 +12,7 @@
                 <mat-label>Nome: *</mat-label>
                 <input
                   type="text"
-                  [(ngModel)]="Cliente.nome"
+                  [(ngModel)]="cliente.nome"
                   name="nome"
                   placeholder="Ex: Leonildo Mazenda"
                   matInput
@@ -27,7 +27,7 @@
                 <mat-label>Email: *</mat-label>
                 <input
                   type="email"
-                  [(ngModel)]="Cliente.email"
+                  [(ngModel)]="cliente.email"
                   name="email"
                   placeholder="Ex: Digite o teu email"
                   matInput
@@ -42,7 +42,7 @@
                 <mat-label>CPF: *</mat-label>
                 <input
                   type="text"
-                  [(ngModel)]="Cliente.cpf"
+                  [(ngModel)]="cliente.cpf"
                   name="cpf"
                   mask="000.000.000-00"
                   placeholder="Ex: Digite o teu email"
@@ -58,7 +58,7 @@
                 <mat-label>Data Nascimento: *</mat-label>
                 <input
                   type="text"
-                  [(ngModel)]="Cliente.dataNascimento"
+                  [(ngModel)]="cliente.dataNascimento"
                   name="dataNascimento"
                   mask="00/00/0000"
                   placeholder="Ex: Digite a sua data de nasciemnto"
@@ -66,17 +66,17 @@
               </mat-form-field>
             </div>
           </div>
-          
+
           <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
             <div fxLayout="colum" fxFlex="400px">
               <mat-form-field class="full-width">
                 <mat-label>UF: *</mat-label>
-                <mat-select (selectionChange)="carregarMunicipios($event)">
+                <mat-select [(value)]="cliente.uf" (selectionChange)="carregarMunicipios($event)">
                   <mat-option *ngFor="let uf of estados" [value]="uf.sigla">
                     {{uf.sigla}} - {{uf.nome}}
                   </mat-option>
                 </mat-select>
-               
+
               </mat-form-field>
             </div>
           </div>
@@ -85,15 +85,15 @@
             <div fxLayout="colum" fxFlex="400px">
               <mat-form-field class="full-width">
                 <mat-label>Município: *</mat-label>
-                <mat-select>
+                <mat-select [(value)]="cliente.municipio" >
                   <mat-option *ngFor="let muni of municipios" [value]="muni.nome">
                    {{muni.nome}}
                   </mat-option>
                 </mat-select>
-               
+
               </mat-form-field>
             </div>
-          </div>          
+          </div>
 
         </mat-card-content>
 
